@@ -1,4 +1,6 @@
-const Init = require('./core/index')
+const Init = require('./core/index');
 
-const app = new Init()
-app.start(3001)
+const app = new Init();
+// app.start(3001)
+
+module.exports = app;
