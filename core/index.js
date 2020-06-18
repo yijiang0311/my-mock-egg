@@ -12,18 +12,19 @@ const {
 
 class Init {
   constructor(conf) {
-    this.$app = new Koa(conf);
-    this.$env = process.env.NODE_ENV;
-    this.$conf = loadConfig(this);
-    this.$service = initService(this);
-    this.$controller = initController();
-    this.$router = initRouter(this);
+    this.app = new Koa(conf);
+    this.env = process.env.NODE_ENV;
+    this.config = loadConfig(this);
+    global.config = this.config;
+    this.service = initService(this);
+    this.controller = initController(this);
+    this.router = initRouter(this);
 
-    this.$app.use(this.$router.routes());
+    this.app.use(this.router.routes());
     // initSchedule()
   }
   start(port) {
-    this.$app.listen(port, () => {
+    this.app.listen(port, () => {
       console.log(`服务器启动啦。。。。端口：${port}`);
     });
   }

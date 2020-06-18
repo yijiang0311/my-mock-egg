@@ -1,7 +1,7 @@
 const user = {
   index: async (app) => {
     console.log("all");
-    const all = await app.$service.user.getList();
+    const all = await app.service.user.getList();
     app.ctx.body = all;
   },
   detail:async app=>{
