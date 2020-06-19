@@ -20,10 +20,15 @@
 ### routes examples
 
 ```
+ const testMiddleware = require('../middleware/test');
+
+module.exports = (app) => ({
 //支持以下方式建立路由
-  'get /:id': app.controller.test.detail,
-  'get /:id': [app.controller.test.detail],
-  'get /:id': [testMiddleware1,middleware2, app.controller.test.detail],
+  'get /': app.controller.test.index,
+  // 'get /:id': app.controller.test.detail,
+  // 'get /:id': [app.controller.test.detail],
+  'get /:id': [testMiddleware(123), app.controller.test.detail],
+});
 
 // 此时的app.controller.test.detail是以下格式{filePath:'',methodName:''}存在的
 // 这是因为在controller 中遍历时没有把类实例化放到app.controller中，
