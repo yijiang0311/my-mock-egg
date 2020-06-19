@@ -10,3 +10,11 @@ module.exports={
   list
 }
 
+const BaseController = require('./_base-controller')
+
+class User extends BaseController{
+  
+}
+
+
+module.exports = user;

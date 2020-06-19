@@ -4,7 +4,7 @@
   "description": "<!--  * @Author: zyi  * @Date: 2020-05-07 15:30:19  * @LastEditTime: 2020-05-07 15:31:07  * @LastEditors: Please set LastEditors  * @Description: In User Settings Edit  * @FilePath: /my-mock-egg/readme.md  -->  实现MVC分层架构 类egg",
   "main": "app.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev PORT=3001 ./node_modules/.bin/nodemon bin/www",
+    "dev": "cross-env NODE_ENV=dev PORT=3001 ./node_modules/.bin/nodemon --inspect=9229 bin/www",
     "sit2": "cross-env NODE_ENV=sit2 ./node_modules/.bin/nodemon bin/www",
     "prod": "cross-env NODE_ENV=production pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "debug": "^4.1.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^8.0.8",

@@ -1,3 +1,7 @@
+/**
+ * @description 中心文件
+ * @author 一江
+ */
 const Koa = require('koa');
 //由于中间件的顺序，catchErr应该放在最前方，所以将parser也放到middleware下面
 const parser = require('koa-bodyparser');
@@ -19,8 +23,9 @@ class Init {
     this.service = initService(this);
     this.controller = initController(this);
     this.router = initRouter(this);
-
+    console.log('66666666.............');
     this.app.use(this.router.routes());
+    // console.log('init.....', this);
     // initSchedule()
   }
   start(port) {

@@ -6,8 +6,8 @@ module.exports = (app) => ({
   // 'get /list': async ctx=>{
   //   ctx.body=[1,2]
   // },
-  'get /': app.controller.home.index,
-  'get /list': app.controller.home.list,
+  // 'get /': app.controller.home.index,
+  // 'get /list': app.controller.home.list,
   // 'get /list': async app=>{
   //   app.ctx.body=[1,2]
   // }
