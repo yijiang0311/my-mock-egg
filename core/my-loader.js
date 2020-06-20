@@ -34,14 +34,17 @@ function load(dir, cb) {
  */
 function initRouter(application) {
   const router = new Router();
-  load('app/routes', (filename, routes) => {
-    const prefix = filename === 'index' ? '' : `/${filename}`;
+  const visitor = (routes, joinedPath, filename) => {
+    let prefix = joinedPath.replace(`${process.cwd()}/app/routes`, '');
+    const reg = /\.js$/;
+    prefix = prefix.replace(reg, '');
+    prefix = prefix.replace(/index$/, '');
+    // filename = filename.replace('.js', '');
     //application 透传到routes
     routes = typeof routes === 'function' ? routes(application) : routes;
     for (let key of Object.keys(routes)) {
       const [method, url] = key.split(' ');
       // router[method](`${prefix}${url}`,routes[key])
-      console.log(routes);
       let middlewares = routes[key];
       let controller;
       //如果有中间件的话，必须是数组格式
@@ -66,7 +69,8 @@ function initRouter(application) {
         }
       });
     }
-  });
+  };
+  requireDirectory(module, '../app/routes', { visit: visitor });
   return router;
 }
 

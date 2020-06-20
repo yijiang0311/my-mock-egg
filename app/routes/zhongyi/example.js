@@ -1,4 +1,4 @@
-const testMiddleware = require('../middleware/test');
+const testMiddleware = require('../../middleware/test');
 
 module.exports = (app) => ({
   'get /': app.controller.example.index,
