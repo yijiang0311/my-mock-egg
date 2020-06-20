@@ -7,7 +7,7 @@ const fs = require('fs');
 const Sequelize = require('sequelize');
 const schedule = require('node-schedule');
 const Router = require('koa-router');
-const { isClass, selfish } = require('./util');
+const { isClass, selfish, firstUpper } = require('./util');
 function load(dir, cb) {
   // const dirPath = resolve(__dirname,`../app/${dir}`)
   const dirPath = `${process.cwd()}/${dir}`;
@@ -131,11 +131,11 @@ function loadConfig(application) {
   const baseConf = require(`${dirPath}/config.default`);
   const envConf = require(`${dirPath}/${filename}`);
   const conf = { ...baseConf, ...envConf, env };
-  if (conf.db) {
-    // application.db=new Sequelize(conf.db)
+  if (conf.sequelize) {
+    // application.sequelize=new Sequelize(conf.sequelize)
     application.model = {};
     load('app/model', (filename, model) => {
-      application.model[filename] = model;
+      application.model[firstUpper(filename)] = model;
     });
   }
   if (conf.middleware) {

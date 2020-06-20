@@ -1,3 +1,8 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
 const app = require('../app');
 
 const port = normalizePort(process.env.PORT || '3000');

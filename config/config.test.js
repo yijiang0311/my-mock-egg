@@ -1,5 +1,5 @@
 const config = {
-  sequelize: {
+  db: {
     dialect: 'mysql',
     host: 'localhost',
     database: 'kkb',
@@ -10,6 +10,7 @@ const config = {
   middleware: ['exception', 'logger', 'parser', 'static'],
   //定时任务
   // schedule:['log']
+  test: 'sit2',
 };
 
 module.exports = config;

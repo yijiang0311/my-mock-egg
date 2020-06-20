@@ -33,7 +33,16 @@ function selfish(target) {
   return proxy;
 }
 
+function firstUpper(str) {
+  var reg = /\b(\w)|\s(\w)/g;
+  // str = str.toLowerCase();
+  return str.replace(reg, function (m) {
+    return m.toUpperCase();
+  });
+}
+
 module.exports = {
   isClass,
   selfish,
+  firstUpper,
 };

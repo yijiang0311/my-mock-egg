@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=dev PORT=3001 ./node_modules/.bin/nodemon --inspect=9229 bin/www",
     "sit2": "cross-env NODE_ENV=sit2 ./node_modules/.bin/nodemon bin/www",
     "prod": "cross-env NODE_ENV=production pm2 start bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test mocha  --recursive --require intelli-espower-loader "
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,10 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "nodemon": "^2.0.4"
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "power-assert": "^1.6.1",
+    "supertest": "^4.0.2"
   }
 }

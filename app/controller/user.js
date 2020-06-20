@@ -1,4 +1,4 @@
-const BaseController = require('../core/_base-controller');
+const BaseController = require('../core/_base_controller');
 
 class User extends BaseController {
   async userList(app) {

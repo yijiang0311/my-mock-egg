@@ -1,32 +1,32 @@
-const {HttpException} = require('../../core/http-exception')
+const { HttpException } = require('../../core/http-exception');
 
-const catchError = async (ctx,next)=>{
+const catchError = async (ctx, next) => {
   try {
-    await next()
+    await next();
   } catch (error) {
-    const isHttpException = error instanceof HttpException
-    const isDev = global.config.env === 'dev'
-    if(isDev && !isHttpException){
-      throw error
+    const isHttpException = error instanceof HttpException;
+    const isDev = global.config.env === 'dev';
+    if (isDev && !isHttpException) {
+      throw error;
     }
-    if(isHttpException){
-      ctx.status = error.status
-      ctx.body={
-        msg:error.msg,
-        error_code:error.error_code,
-        success:error.success,
-      }
-    }else{
-      ctx.status = 500
-      ctx.body={
-        msg:'服务器错误',
-        success:false,
-        error_code:1000000001
-      }
+    if (isHttpException) {
+      ctx.status = error.status;
+      ctx.body = {
+        message: error.message,
+        code: error.code,
+        success: error.success,
+      };
+    } else {
+      ctx.status = 500;
+      ctx.body = {
+        message: '服务器错误',
+        success: false,
+        code: 10000,
+      };
     }
     console.log('catch error');
     console.log(error);
   }
-}
+};
 
-module.exports = catchError
+module.exports = catchError;

@@ -1,28 +1,28 @@
-const bcrypt = require("bcryptjs");
-const { Sequelize, Model } = require("sequelize");
-const { sequelize } = require("../../core/mysql");
+const bcrypt = require('bcryptjs');
+const { Sequelize, Model } = require('sequelize');
+const { sequelize } = require('../../core/mysql');
 // https://blog.csdn.net/adley_app/article/details/94384100
 //后面可以加入 nodejs RSA 与 jsencrypt 实现前端加密 后端解密功能
 // const NodeRSA = require('node-rsa');
 
 class User extends Model {
-  static async verifyEmailPassword(email,plainPwd){
+  static async verifyEmailPassword(email, plainPwd) {
     const user = await User.findOne({
-      where:{
-        email
-      }
-    })
-    if(!user){
-      throw new global.errors.AuthFailed('用户不存在')
+      where: {
+        email,
+      },
+    });
+    if (!user) {
+      throw new global.errors.AuthFailed('用户不存在');
     }
     //同步
     // const isAuth = bcrypt.compareSync(plainPwd,user.password)
     //异步
-    const isAuth = await bcrypt.compare(plainPwd,user.password)
-    if(!isAuth){
-      throw new global.errors.AuthFailed('密码错误')
+    const isAuth = await bcrypt.compare(plainPwd, user.password);
+    if (!isAuth) {
+      throw new global.errors.AuthFailed('密码错误');
     }
-    return user
+    return user;
   }
 }
 
@@ -34,6 +34,7 @@ User.init(
       autoIncrement: true,
     },
     nickname: Sequelize.STRING,
+    username: Sequelize.STRING,
     email: {
       type: Sequelize.STRING(128),
       unique: true,
@@ -44,8 +45,8 @@ User.init(
         //同步
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(val, salt);
-        this.setDataValue("password", hash);
-        //异步 async 
+        this.setDataValue('password', hash);
+        //异步 async
         // const self =this
         // bcrypt.genSalt(10,function(err,salt){
         //   bcrypt.hash(val,salt,function(err,hash){
@@ -64,7 +65,7 @@ User.init(
       unique: true,
     },
   },
-  { sequelize, modelName: "user" }
+  { sequelize, modelName: 'users' }
 );
 
-module.exports = User
+module.exports = User;

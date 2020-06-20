@@ -95,4 +95,45 @@ class TestService extends BaseService {
 module.exports = TestService;
 ```
 
+### 测试
+
+    测试选择的是 mocha + supertest + power-assert + intelli-espower-loader
+
+### test example
+
+test/server.js
+
+```
+const request = require('supertest');
+const server = require('../app').app.callback();
+
+module.exports = request(server);
+
+```
+
+test/app/controller/example.test.js
+
+```
+const assert = require('assert');
+const server = require('../../server');
+
+describe('app/controller/example', () => {
+  describe('get /example/1', async () => {
+    it('成功时应返回code 0 ', async () => {
+      const res = await server.get('/example/1');
+      assert(res.body.code === 0);
+    });
+  });
+  describe('post /example/update', async () => {
+    it('成功时应返回code 0 ', async () => {
+      const res = await (await server.post('/example/1'))
+        .set('Accept', 'application/json')
+        .send({ name: 'zyi' });
+      assert(res.body.code === 0);
+    });
+  });
+});
+
+```
+
 框架已经搭好了，往里面写业务代码就行了
