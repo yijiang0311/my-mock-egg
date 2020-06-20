@@ -24,6 +24,7 @@ class Init {
     this.controller = initController(this);
     this.router = initRouter(this);
     this.app.use(this.router.routes());
+    // console.log(this.controller);
     // initSchedule()
   }
   start(port) {

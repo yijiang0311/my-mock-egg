@@ -26,3 +26,14 @@ class Test {
 
 const logger = selfish(new Test());
 logger.getList();
+
+var requireDirectory = require('require-directory');
+
+const visitor = (obj) => {
+  console.log(obj);
+  return obj;
+};
+const modules = requireDirectory(module, './app/controller', {
+  visit: visitor,
+});
+console.log(modules);
