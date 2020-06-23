@@ -3,6 +3,8 @@
 /**
  * Module dependencies.
  */
+require('babel-core/register')();
+require('babel-polyfill');
 const app = require('../app');
 
 const port = normalizePort(process.env.PORT || '3000');

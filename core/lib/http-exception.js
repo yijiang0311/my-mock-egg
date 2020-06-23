@@ -28,7 +28,7 @@ class NotFound extends HttpException {
 }
 
 class ParameterException extends HttpException {
-  constructor(message = '参数错误', code, status = 400) {
+  constructor(message = '参数错误', code = 100004, status = 422) {
     super();
     this.status = status;
     this.message = message;

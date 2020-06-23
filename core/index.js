@@ -4,14 +4,13 @@
  */
 const Koa = require('koa');
 //由于中间件的顺序，catchErr应该放在最前方，所以将parser也放到middleware下面
-const parser = require('koa-bodyparser');
-const static = require('koa-static');
+// const parser = require('koa-bodyparser');
+// const static = require('koa-static');
 const {
   initRouter,
   initController,
   initService,
   loadConfig,
-  initSchedule,
 } = require('./my-loader');
 
 class Init {
@@ -28,7 +27,7 @@ class Init {
   }
   start(port) {
     this.app.listen(port, () => {
-      console.log(`服务器启动啦。。。。端口：${port}`);
+      console.log(`服务器启动啦。。。。端口: ${port}`);
     });
   }
 }

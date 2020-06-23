@@ -1,0 +1,4 @@
+{
+  "presets": [["env", { "exclude": ["transform-es2015-classes"] }], "stage-0"],
+  "plugins": ["transform-decorators-legacy", "transform-runtime"]
+}

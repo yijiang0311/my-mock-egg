@@ -30,16 +30,12 @@ class ExampleService extends BaseService {
   }
 
   async new({ username, email }) {
-    const { model } = this.app;
-    try {
-      const res = await model.User.create({
-        username,
-        email,
-      });
-      return res;
-    } catch (error) {
-      throw new Error(error);
-    }
+    const { model, ctx } = this.app;
+    const res = await model.User.create({
+      username,
+      email,
+    });
+    return res;
   }
   async update({ username, email, id }) {
     const { model } = this.app;

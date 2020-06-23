@@ -8,6 +8,7 @@ const Sequelize = require('sequelize');
 const schedule = require('node-schedule');
 const Router = require('koa-router');
 const requireDirectory = require('require-directory');
+const { validate } = require('./lib/index');
 const { isClass, selfish, firstUpper } = require('./util');
 function load(dir, cb) {
   // const dirPath = resolve(__dirname,`../app/${dir}`)
@@ -56,6 +57,7 @@ function initRouter(application) {
       }
       router[method](`${prefix}${url}`, ...middlewares, async (ctx) => {
         application.ctx = ctx;
+        ctx.validate = validate(ctx);
         //在controller 中遍历时没有把类实例化放到app.controller中，转而用{filePath:'',methodName:''}
         //就是为了在此处实例化类的时候能将ctx传进去
         if (controller.filePath) {

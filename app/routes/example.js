@@ -2,7 +2,7 @@ const testMiddleware = require('../middleware/test');
 
 module.exports = (app) => ({
   'get /': app.controller.example.index,
-  'get /:id': app.controller.zyi.example.detail,
+  'get /:id': app.controller.example.detail,
   'post /': app.controller.example.new,
   'put /:id': app.controller.example.update,
   // 'get /:id': [app.controller.example.detail],

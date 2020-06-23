@@ -95,6 +95,64 @@ class TestService extends BaseService {
 module.exports = TestService;
 ```
 
+### validate 参数校验写法
+
+    参数校验提供了两种写法(使用的是[parameter]):
+      1、装饰器写法
+          @params传入的是ctx.params的校验规则，
+          @body传入的是ctx.request.body的校验规则，
+          @query传入的是ctx.request.query的校验规则
+          @validate则可以传入body,params,query三种的校验规则
+      2、ctx.validate(rule,data)
+         data可以不传，get,head请求默认是ctx.query，其他请求默认是ctx.request.body
+    使用时不用额外处理异常情况，默认已经处理了，固定返回res.code ===100004,比如如下：
+    ```
+    {
+      "message": "[{\"message\":\"should match /^\\\\d+$/\",\"code\":\"invalid\",\"field\":\"id\"}]",
+      "code": 100004,
+      "success": false
+    }
+    ```
+
+```
+//文件路径： app/controller/example.js
+const BaseController = require('../core/_base_controller');
+const { validate, params,body,query } = require('../core/my-decorator');
+
+class ExampleController extends BaseController {
+  //@params传入的是ctx.params的校验规则，
+  //@body传入的是ctx.request.body的校验规则，
+  //@query传入的是ctx.request.query的校验规则
+  @params({
+    id: 'id',
+  })
+  async detail() {
+    const { app, service, ctx, config } = this;
+    const id = ctx.params.id;
+    const all = await service.example.detail(id);
+    this.success(all);
+  }
+  //@validate则可以传入body,params,query三种的校验规则
+  @validate({ body: { username: 'string', email: 'email' },query:{id:'id'},params:{id:'id;} })
+  async new() {
+    const { ctx, service } = this;
+    // post请求默认校验的是ctx.request.body
+    // ctx.validate({ username: 'string', email: 'email' });
+    const { username, email } = ctx.request.body;
+    try {
+      const res = await service.example.new({ username, email });
+      this.success(res);
+    } catch (error) {
+      console.error(error.message, error.errors);
+      const err0 = error.errors[0];
+      this.registerFailed(error.message);
+    }
+  }
+}
+
+module.exports = ExampleController;
+```
+
 ### 测试
 
     测试选择的是 mocha + supertest + power-assert + intelli-espower-loader
