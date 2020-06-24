@@ -1,3 +1,3 @@
 const parser = require('koa-bodyparser')
 
-module.exports=parser()
+module.exports=(options)=>parser(options)

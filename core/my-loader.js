@@ -60,6 +60,10 @@ function initRouter(application) {
         ctx.validate = validate(ctx);
         //在controller 中遍历时没有把类实例化放到app.controller中，转而用{filePath:'',methodName:''}
         //就是为了在此处实例化类的时候能将ctx传进去
+        if (!controller) {
+          const errorMessage = `路由${prefix}${url}对应的controller没有声明，如已经声明请检查是否exports`;
+          throw new Error(errorMessage);
+        }
         if (controller.filePath) {
           const path = `${controller.filePath}`;
           const controllerClass = require(path);
@@ -135,8 +139,13 @@ function loadConfig(application) {
   if (conf.middleware) {
     //安装配置文件中的中间件列表加载中间件
     conf.middleware.forEach((mid) => {
+      if (mid === 'session') {
+        //if config.session.cookie.signed===true （默认） 则必须设置app.keys
+        application.app.keys = conf.keys;
+      }
       const path = `${process.cwd()}/app/middleware/${mid}`;
-      application.app.use(require(path));
+      //中间件需写成可以入参的形式(options)=>async (ctx,next)=>{}
+      application.app.use(require(path)(conf[mid]));
     });
   }
   //定时任务 也可以放在配置文件中进行配置是否启用

@@ -47,6 +47,13 @@ class BaseController extends Controller {
       message,
     };
   }
+  loginFailed(message = '登录失败', code = 100006) {
+    this.ctx.body = {
+      success: false,
+      code,
+      message,
+    };
+  }
 }
 
 module.exports = BaseController;

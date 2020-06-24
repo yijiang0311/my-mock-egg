@@ -7,7 +7,7 @@ const config = {
     password: 'zhongyi1',
   },
   //中间件
-  middleware: ['exception', 'logger', 'parser', 'static'],
+  // middleware: ['exception', 'logger', 'parser', 'static'],
   //定时任务
   // schedule:['log']
   test: 1234,

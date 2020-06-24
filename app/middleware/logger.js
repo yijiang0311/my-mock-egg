@@ -1,4 +1,4 @@
-module.exports = async (ctx, next) => {
+module.exports = (options)=>async (ctx, next) => {
   // console.log(ctx.method + ': ' + ctx.path);
   const start = new Date();
   await next();

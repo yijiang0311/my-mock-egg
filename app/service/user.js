@@ -9,6 +9,29 @@ const delay = (time) => {
 };
 
 class UserService extends BaseService {
+  /**
+   * 获取用户信息
+   * @param {id} id
+   * @param {username} username
+   * @param {password} password
+   */
+  async getUserInfo({ id, username, password }) {
+    const { model } = this.app;
+    const whereOpt = {};
+    if (!!id) {
+      whereOpt.id = id;
+    }
+    if (!!username) {
+      whereOpt.username = username;
+    }
+    if (!!password) {
+      whereOpt.password = password;
+    }
+    const one = await model.User.scope('bh').findOne({
+      where: whereOpt,
+    });
+    return one;
+  }
   async getAll() {
     console.log('getall');
     await delay(1000);
