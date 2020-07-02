@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { Sequelize, Model } = require('sequelize');
 const { sequelize } = require('../../core/mysql');
+const { promisify } = require('util');
 // https://blog.csdn.net/adley_app/article/details/94384100
 //后面可以加入 nodejs RSA 与 jsencrypt 实现前端加密 后端解密功能
 // const NodeRSA = require('node-rsa');
@@ -34,7 +35,10 @@ User.init(
       autoIncrement: true,
     },
     nickname: Sequelize.STRING,
-    username: Sequelize.STRING,
+    username: {
+      type: Sequelize.STRING,
+      unique: true,
+    },
     email: {
       type: Sequelize.STRING(128),
       unique: true,
@@ -44,8 +48,8 @@ User.init(
       set(val) {
         //同步
         const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(val, salt);
-        this.setDataValue('password', hash);
+        const hashVal = bcrypt.hashSync(val, salt);
+        this.setDataValue('password', hashVal);
         //异步 async
         // const self =this
         // bcrypt.genSalt(10,function(err,salt){
@@ -58,6 +62,12 @@ User.init(
         //     }
         //   })
         // })
+        //异步 async await
+        // const genSalt = promisify(bcrypt.genSalt);
+        // const hash = promisify(bcrypt.hash);
+        // const salt = await genSalt(10);
+        // const hashVal = await hash(val, salt);
+        // this.setDataValue('password', hashVal);
       },
     },
     openid: {

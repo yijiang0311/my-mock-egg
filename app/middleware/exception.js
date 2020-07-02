@@ -4,6 +4,10 @@ const catchError = (options) => async (ctx, next) => {
   try {
     await next();
   } catch (error) {
+    //使用了koa-jwt中间件，如果匹配的路由没有携带token将会触发401，此时的ctx.status===401
+    if (error.status === 401) {
+      // console.log('触发401');
+    }
     const isHttpException = error instanceof HttpException;
     const isDev = global.config.env === 'dev';
     if (isDev && !isHttpException) {
