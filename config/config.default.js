@@ -1,4 +1,6 @@
 //config被挂载到了全局，global.config.XXX获取，同时config也被挂载到了Controller,Service类的实例上详见readme
+
+const JWT_SECRET_KEY = 'SD1df#&%#$dd23uis_sd$@asf32423'; //用于jsonwebtoken的secretKey
 const config = {
   sequelize: {
     dialect: 'mysql',
@@ -38,16 +40,16 @@ const config = {
   secretKeys: {
     CRYPTO_SECRET_KEY: 'SD1df#&%#$dd23uis_sd$@asf32423',
     SESSION_SECRET_KEY: 'UIsssdf#$$326d_f_7878#sR$',
-    JWT_SECRET_KEY: 'SD1df#&%#$dd23uis_sd$@asf32423', //用于jsonwebtoken的secretKey
-    JWT_EXPIRES_IN: 60 * 60 * 24, //用于jsonwebtoken的过期时间
+    JWT_SECRET_KEY, //用于jsonwebtoken的secretKey
+    JWT_EXPIRES_IN: 60, //用于jsonwebtoken的过期时间
   },
   //中间件koaJwt的配置项options
   koaJwt: {
-    secret: 'SD1df#&%#$dd23uis_sd$@asf32423', //与用于jsonwebtoken的secretKey保持一致
+    secret: JWT_SECRET_KEY, //与用于jsonwebtoken的secretKey保持一致
     unless: { path: [/^\/public/, /^\/v1\/user\/login/] },
   },
   verifyToken: {
-    secret: 'SD1df#&%#$dd23uis_sd$@asf32423', //与用于jsonwebtoken的secretKey保持一致
+    secret: JWT_SECRET_KEY, //与用于jsonwebtoken的secretKey保持一致
   },
   //定时任务
   // schedule:['log']
